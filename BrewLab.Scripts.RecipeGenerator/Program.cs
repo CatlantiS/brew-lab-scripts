@@ -19,8 +19,6 @@ namespace BrewLab.Scripts.RecipeGenerator
 
         static void Main(string[] args)
         {
-            var recipes = new List<Recipe>();
-
             //Lol, I'm pretty sure this is slower than doing it all on one thread.
             Parallel.ForEach(_generateRecipes(quantity: 1000), recipe =>
             {
