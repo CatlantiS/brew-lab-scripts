@@ -18,8 +18,7 @@ namespace BrewLab.Scripts.RecipeGenerator
 
         static void Main(string[] args)
         {
-            //Lol, I'm pretty sure this is slower than doing it all on one thread.
-            Parallel.ForEach(_generateRecipes(quantity: 1000), recipe =>
+            foreach(Recipe recipe in _generateRecipes(quantity: 1000))
             {
                 var id = _postRecipe(recipe).Result;
 
@@ -27,7 +26,7 @@ namespace BrewLab.Scripts.RecipeGenerator
 
                 //Writing to console is thread-safe.
                 Console.WriteLine(log);
-            });
+            }
 
             Console.ReadKey();
         }
