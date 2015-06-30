@@ -15,7 +15,6 @@ namespace BrewLab.Scripts.RecipeGenerator
         private static readonly string _userID = "dudeBruhson";
 
         private static Random _random = new Random();
-        private static object _lock = new object();
 
         static void Main(string[] args)
         {
@@ -39,10 +38,7 @@ namespace BrewLab.Scripts.RecipeGenerator
             {
                 string name = _generateText(10);
 
-                double volume = 0;
-
-                lock (_lock)
-                    volume = ((double)_random.Next(20) / 20) * 5;
+                double volume = ((double)_random.Next(20) / 20) * 5;
 
                 string units  = string.Empty;
 
@@ -83,18 +79,10 @@ namespace BrewLab.Scripts.RecipeGenerator
             //http://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c
             //Making it more likely to have spaces like some natural text strings.
             var pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-    ";
-            int randIndex = 0;
-            var chars = new List<char>();
 
-            foreach (string O__o in Enumerable.Repeat(pool, textLength))
-            {
-                lock (_lock)
-                    randIndex = _random.Next(pool.Length);
-
-                chars.Add(O__o[randIndex]);
-            }
-
-            var text = new string(chars.ToArray());
+            var text = new string(Enumerable.Repeat(pool, textLength)
+                .Select(x => x[_random.Next(pool.Length)])
+                .ToArray());
 
             return text;
         }
