@@ -24,7 +24,6 @@ namespace BrewLab.Scripts.RecipeGenerator
 
                 string log = string.Format("Recipe {0} created.", id);
 
-                //Writing to console is thread-safe.
                 Console.WriteLine(log);
             }
 
