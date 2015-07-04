@@ -30,35 +30,46 @@ namespace BrewLab.Scripts.RecipeGenerator
             Console.ReadKey();
         }
 
-        private static IEnumerable<Recipe> _generateRecipes(int quantity = 100, bool isVersion = false)
+        private static IEnumerable<Recipe> _generateRecipes(int quantity = 100)
         {
-            for (int i = 0; i < quantity; i++)
+            Func<int, bool, IEnumerable<Recipe>> generate = null;
+            
+            generate = new Func<int, bool, IEnumerable<Recipe>>((q, isVersion) =>
             {
-                string name = _generateText(10);
+                var recipes = new List<Recipe>();
 
-                double volume = ((double)_random.Next(20) / 20) * 5;
-
-                string units = string.Empty;
-
-                if (volume > 2.5)
-                    units = "Gallons";
-                else
-                    units = "Liters";
-
-                string yeastType = _generateText(25);
-
-                var recipe = new Recipe
+                for (int i = 0; i < q; i++)
                 {
-                    Name = name,
-                    UserID = _userID,
-                    Volume = volume,
-                    Units = units,
-                    YeastType = yeastType,
-                    Versions = !isVersion ? _generateRecipes(10, true).ToList() : null
-                };
+                    string name = _generateText(10);
 
-                yield return recipe;
-            }
+                    double volume = ((double)_random.Next(20) / 20) * 5;
+
+                    string units = string.Empty;
+
+                    if (volume > 2.5)
+                        units = "Gallons";
+                    else
+                        units = "Liters";
+
+                    string yeastType = _generateText(25);
+
+                    var recipe = new Recipe
+                    {
+                        Name = name,
+                        UserID = _userID,
+                        Volume = volume,
+                        Units = units,
+                        YeastType = yeastType,
+                        Versions = !isVersion ? generate(10, true).ToList() : null
+                    };
+
+                    recipes.Add(recipe);
+                }
+
+                return recipes;
+            });
+
+            return generate(quantity, false);
         }
 
         private static async Task<string> _postRecipe(Recipe recipe)
