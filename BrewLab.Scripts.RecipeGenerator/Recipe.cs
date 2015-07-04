@@ -23,5 +23,8 @@ namespace BrewLab.Scripts.RecipeGenerator
 
         [JsonProperty("yeastType")]
         public string YeastType { get; set; }
+
+        [JsonProperty("recipes")]
+        public List<Recipe> Versions { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace BrewLab.Scripts.RecipeGenerator
             Console.ReadKey();
         }
 
-        private static IEnumerable<Recipe> _generateRecipes(int quantity = 100)
+        private static IEnumerable<Recipe> _generateRecipes(int quantity = 100, bool isVersion = false)
         {
             for (int i = 0; i < quantity; i++)
             {
@@ -38,7 +38,7 @@ namespace BrewLab.Scripts.RecipeGenerator
 
                 double volume = ((double)_random.Next(20) / 20) * 5;
 
-                string units  = string.Empty;
+                string units = string.Empty;
 
                 if (volume > 2.5)
                     units = "Gallons";
@@ -50,10 +50,11 @@ namespace BrewLab.Scripts.RecipeGenerator
                 var recipe = new Recipe
                 {
                     Name = name,
-                    UserID = _userID, 
+                    UserID = _userID,
                     Volume = volume,
                     Units = units,
-                    YeastType = yeastType
+                    YeastType = yeastType,
+                    Versions = !isVersion ? _generateRecipes(10, true).ToList() : null
                 };
 
                 yield return recipe;
