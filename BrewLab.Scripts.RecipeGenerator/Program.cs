@@ -57,7 +57,7 @@ namespace BrewLab.Scripts.RecipeGenerator
                     Units = units,
                     YeastType = yeastType,
                     Versions = !isVersion ? Enumerable.Range(0, 10)
-                        .Select(x => generateRecipe(true)).ToList() : null
+                        .Select(_ => generateRecipe(true)).ToList() : null
                 };
 
                 return recipe;
