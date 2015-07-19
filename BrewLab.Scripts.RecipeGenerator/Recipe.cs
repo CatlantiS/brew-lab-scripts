@@ -13,7 +13,7 @@ namespace BrewLab.Scripts.RecipeGenerator
         public string Name { get; set; }
 
         [JsonProperty("userId")]
-        public string UserID { get; set; }
+        public int UserID { get; set; }
 
         [JsonProperty("volume")]
         public double Volume { get; set; }

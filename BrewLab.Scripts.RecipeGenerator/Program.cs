@@ -10,9 +10,9 @@ namespace BrewLab.Scripts.RecipeGenerator
     class Program
     {
         //Because I'm all about that Baas.  
-        private static readonly string _baseAddress = "http://localhost:8008/api/v1/";
-        //This is the user we're querying for right now in the app, so...
-        private static readonly string _userID = "dudeBruhson";
+        private static readonly string _baseAddress = "http://blabdatadev01.cloudapp.net:3000/api/v1/";
+        //Default user for now...
+        private static readonly int _userID = 1;
 
         private static Random _random = new Random();
 
@@ -71,7 +71,7 @@ namespace BrewLab.Scripts.RecipeGenerator
         {
             using (var client = new HttpClient { BaseAddress = new Uri(_baseAddress)})
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync<Recipe>("store/", recipe);
+                HttpResponseMessage response = await client.PostAsJsonAsync<Recipe>("recipes/", recipe);
 
                 var result = await response.Content.ReadAsStringAsync();
 
