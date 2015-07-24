@@ -18,9 +18,11 @@ namespace BrewLab.Scripts.RecipeGenerator
 
         static void Main(string[] args)
         {
-            foreach(Recipe recipe in _generateRecipes(quantity: 1000))
+            var tasks = _generateRecipes(1000).Select(recipe => _postRecipe(recipe));
+
+            foreach (var task in tasks)
             {
-                var id = _postRecipe(recipe).Result;
+                var id = task.Result;
 
                 string log = string.Format("Recipe {0} created.", id);
 
